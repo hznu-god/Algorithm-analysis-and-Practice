@@ -70,15 +70,12 @@ bool cmp(int a, int b) {
 double dis(point& a, point& b) {
 	return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 }
-double sum(point& a, point& b) {
-	return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
-}
 void forceClosePoint() {
 	int pos1 = 0, pos2 = 0;
 	double minn = inf;
 	for (int i = 1; i <= n; ++i) {
 		for (int j = i + 1; j <= n; ++j) {
-			if (sum(p[i], p[j]) < minn) {
+			if (dis(p[i],p[j]) < minn) {
 				minn = dis(p[i], p[j]);
 				pos1 = i;
 				pos2 = j;
@@ -112,7 +109,7 @@ double divideClosePoint(int l, int r) {
 signed main() {
 	cin >> n;
 	for (int i = 1; i <= n; ++i) {
-		int x, y;
+		double x, y;
 		cin >> x >> y;
 		p[i] = point(x, y);
 	}
