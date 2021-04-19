@@ -55,32 +55,33 @@ inline T gcd(T a, T b) {
 }
 vector<int>s;
 int n, k;
-void selectKth(vector<int>s, int n, int k) {
-	vector<int>temp(s);
-	vector<int>m;
-	vector<int>s1, s2;
+void selectKth(vector<int> s, int n, int k) {
+	vector<int> temp, m, s1, s2;
+	temp = s;
 	for (int i = 0; i < n; i += 5) {
-		int len = min(n - i, 5);
+		int len = min(5, n - i);
 		sort(temp.begin() + i, temp.begin() + i + len);
-		m.push_back(temp[i + (len - 1) / 2]);//中位数m*数组
+		m.push_back(temp[i + (len - 1) / 2]);
 	}
 	sort(m.begin(), m.end());
 	int mid = m[(m.size() - 1) / 2];
-	for (int i = 0; i < n; ++i) {
+	for (int i = 0; i < n; i += 5) {
 		if (n - i < 5) {
-			for (int j = i; j < n; ++j) {
-				if (temp[j] > mid)s2.push_back(temp[j]);
-				else if (temp[j] < mid)s1.push_back(temp[j]);
+			for (int j = i; j < n; j++) {
+				if (temp[j] > mid)
+					s2.push_back(temp[j]);
+				else if (temp[j] < mid)
+					s1.push_back(temp[j]);
 			}
 			break;
 		}
 		if (temp[i + 2] < mid) {
-			for (int j = i; j <= i + 2; ++j)s1.push_back(temp[j]);
-			for (int j = i + 3; j < i + 5; ++j) {
+			for (int j = i; j <= i + 2; j++)
+				s1.push_back(temp[j]);
+			for (int j = i + 3; j < i + 5; j++) {
 				if (temp[j] > mid)
 					s2.push_back(temp[j]);
-				else 
-					s1.push_back(temp[j]);
+				else s1.push_back(temp[j]);
 			}
 		}
 		else if (temp[i + 2] > mid) {
@@ -95,7 +96,6 @@ void selectKth(vector<int>s, int n, int k) {
 		else {
 			for (int j = i; j < i + 2; j++)
 				s1.push_back(temp[j]);
-
 			for (int j = i + 3; j < i + 5; j++)
 				s2.push_back(temp[j]);
 		}
@@ -104,7 +104,7 @@ void selectKth(vector<int>s, int n, int k) {
 		cout << mid << endl;
 		return;
 	}
-	else if (k <= s.size())
+	else if (k <= s1.size())
 		selectKth(s1, s1.size(), k);
 	else
 		selectKth(s2, s2.size(), k - s1.size() - 1);
